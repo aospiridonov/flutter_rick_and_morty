@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rick_and_morty/bloc_observable.dart';
 import 'package:flutter_rick_and_morty/ui/pages/home_page.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final storage = await HydratedStorage.build(
+      storageDirectory: await getTemporaryDirectory());
+
+  HydratedBlocOverrides.runZoned(
+    () => runApp(const MyApp()),
+    blocObserver: CharacterBlocObservable(),
+    storage: storage,
+  );
+  /*BlocOverrides.runZoned(
+    () => runApp(const MyApp()),
+    blocObserver: CharacterBlocObservable(),
+  );
+  */
 }
 
 class MyApp extends StatelessWidget {

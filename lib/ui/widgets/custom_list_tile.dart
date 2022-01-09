@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rick_and_morty/data/models/character.dart';
+import 'package:flutter_rick_and_morty/ui/widgets/character_status.dart';
 
 class CustomListTile extends StatelessWidget {
   final Results result;
@@ -40,6 +41,16 @@ class CustomListTile extends StatelessWidget {
                       )),
                   const SizedBox(
                     height: 10,
+                  ),
+                  CharacterStatus(
+                    liveState: result.status == 'Alive'
+                        ? LiveState.alive
+                        : result.status == 'Dead'
+                            ? LiveState.dead
+                            : LiveState.unknown,
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   SizedBox(
                       width: MediaQuery.of(context).size.width / 2,
